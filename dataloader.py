@@ -15,7 +15,7 @@ def data_split(dir):
     df = pd.DataFrame(data)
     labels = df['Label']
     images = df['Filename']
-    labels_train, labels_test, images_train, images_test = train_test_split(labels, images, test_size=0.3, random_state=5)
+    labels_train, labels_test, images_train, images_test = train_test_split(labels, images, test_size=0.2, random_state=5)
 
     df1 = pd.DataFrame(labels_train)
     df1 = pd.concat([df1,images_train],axis = 1)
@@ -39,7 +39,7 @@ class bottle(torch.utils.data.Dataset):
         img_path = os.path.join(self.root_dir,self.frames.iloc[index,1])
         label = self.frames.iloc[index,0]
         ## according to alphabetic
-        labels = ['M.Beer','MD.Diet', 'MD.Orig', 'P.Cherry', 'P.diet','P.Orig', 'P.Rsugar', 'P.Zero']
+        labels = ['MD.Orig', 'P.Cherry', 'P.Orig', 'P.Zero']
 
         with open(img_path, 'rb') as f:
             img = Image.open(f)
