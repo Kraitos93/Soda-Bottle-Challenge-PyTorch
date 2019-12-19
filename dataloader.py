@@ -26,17 +26,17 @@ def data_split(dir):
     df2.to_csv('test_splt.csv', sep=',', encoding='utf-8',index=False)
  
 #This line has already been run once to generate the 2 files, which I have also included in the Repo 
-#data_split('Soda_Bottles/train.csv')
+data_split('datasets/sodabottles/train.csv')
 
 
 class bottle(torch.utils.data.Dataset):
     def __init__(self, filename, transforms = None):
-        self.root_dir = 'Soda_Bottles/'
+        self.root_dir = 'datasets/sodabottles/'
         self.frames = pd.read_csv(filename)
         self.transforms = transforms
 
     def __getitem__(self, index):
-        img_path = os.path.join(self.root_dir,self.frames.iloc[index,1])
+        img_path = os.path.join(self.root_dir,'train',self.frames.iloc[index,1])
         label = self.frames.iloc[index,0]
         ## according to alphabetic
         labels = ['MD.Orig', 'P.Cherry', 'P.Orig', 'P.Zero']
