@@ -39,5 +39,6 @@ if __name__ == "__main__":
     soda_model = CNN()
     soda_model.load_state_dict(torch.load('SGD_soda_model.pkl'))
     soda_model.eval()
+    soda_model.to(device)
     test_acc = get_accuracy(soda_model,loader)
     print("Test Accuracy: ",test_acc)
