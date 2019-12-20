@@ -14,12 +14,13 @@ from dataloader import bottle,data_split
 
 #--------------------------------------------------------------------------
 #Defining Dataloader and Transforms 
-mode="full"
+mode="no_cherry"
+path = "sodabottles_no_cherry"
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225])
 data_train_transform = transforms.Compose([transforms.Resize(size = (256,256)),transforms.RandomResizedCrop(size = 224),transforms.RandomHorizontalFlip(),transforms.ToTensor(),normalize])
-soda_bottles_train = bottle('train_splt.csv', data_train_transform, mode=mode)
+soda_bottles_train = bottle('train_splt.csv', data_train_transform, path=path mode=mode)
 data_test_transform = transforms.Compose([transforms.Resize(size = (224,224)), transforms.ToTensor(), normalize])
-soda_bottles_test = bottle('test_splt.csv', data_test_transform, mode=mode)
+soda_bottles_test = bottle('test_splt.csv', data_test_transform, path=path, mode=mode)
 train_loader = torch.utils.data.DataLoader(dataset=soda_bottles_train, batch_size=32, shuffle=True, num_workers=4)
 test_loader = torch.utils.data.DataLoader(dataset=soda_bottles_test, batch_size=32, shuffle=True, num_workers=4)
 
