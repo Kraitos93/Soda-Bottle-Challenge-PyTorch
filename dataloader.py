@@ -15,7 +15,7 @@ def data_split(dir):
     df = pd.DataFrame(data)
     labels = df['Label']
     images = df['Filename']
-    labels_train, labels_test, images_train, images_test = train_test_split(labels, images, test_size=0.2, random_state=5)
+    labels_train, labels_test, images_train, images_test = train_test_split(labels, images, test_size=0.3, random_state=5)
 
     df1 = pd.DataFrame(labels_train)
     df1 = pd.concat([df1,images_train],axis = 1)
@@ -30,8 +30,8 @@ data_split('datasets/sodabottles/train.csv')
 
 
 class bottle_test(torch.utils.data.Dataset):
-    def __init__(self, filename, transforms = None, path='datasets/sodabottles/'):
-        self.root_dir = path
+    def __init__(self, filename, transforms = None, path='datasets/sodabottle/'):
+        self.root_dir = os.path.join(os.getcwd(), path)
         self.frames = pd.read_csv(os.path.join(self.root_dir, 'labels', filename))
         self.transforms = transforms
 
@@ -54,7 +54,7 @@ class bottle_test(torch.utils.data.Dataset):
 
 class bottle(torch.utils.data.Dataset):
     def __init__(self, filename, transforms = None, path='datasets/sodabottles/'):
-        self.root_dir = path
+        self.root_dir = os.path.join(os.getcwd(), path)
         self.frames = pd.read_csv(filename)
         self.transforms = transforms
 
