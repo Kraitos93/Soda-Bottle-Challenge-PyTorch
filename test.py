@@ -35,9 +35,10 @@ if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print("Testing on ",device)
     args = sys.argv
-    loader = define_loader(args[1]) 
+    loader = define_loader(args[1])
+    mode = args[2]
     soda_model = CNN()
-    soda_model.load_state_dict(torch.load('SGD_soda_model.pkl'))
+    soda_model.load_state_dict(torch.load('SGD_soda_model_%s.pkl' % (mode)))
     soda_model.eval()
     soda_model.to(device)
     test_acc = get_accuracy(soda_model,loader)

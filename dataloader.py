@@ -29,8 +29,19 @@ def data_split(dir):
 #data_split('datasets/sodabottles/train.csv')
 
 
+def mode_classes(mode):
+    if mode == "full":
+        return ['P.Orig', 'MD.Orig', 'P.Cherry', 'P.Zero']
+    elif mode == "no_pepsi":
+        return ['MD.Orig', 'P.Cherry', 'P.Zero']
+    elif mode == "no_cherry":
+        return ['P.Orig', 'MD.Orig', 'P.Zero']
+    else:
+        raise Exception("Unknown mode used")
+
+
 class bottle_test(torch.utils.data.Dataset):
-    def __init__(self, filename, transforms = None, path='sodabottle/'):
+    def __init__(self, filename, transforms = None, path='sodabottle/', mode="full"):
         self.root_dir = os.path.join(os.getcwd(), 'datasets', path)
         self.frames = pd.read_csv(os.path.join(self.root_dir, 'labels', filename))
         self.transforms = transforms
@@ -39,7 +50,7 @@ class bottle_test(torch.utils.data.Dataset):
         img_path = os.path.join(self.root_dir,'images',self.frames.iloc[index,1])
         label = self.frames.iloc[index,0]
         ## according to alphabetic
-        labels = ['MD.Orig', 'P.Cherry', 'P.Orig', 'P.Zero']
+        labels = mode_classes(mode)
 
         with open(img_path, 'rb') as f:
             img = Image.open(f)
@@ -53,7 +64,7 @@ class bottle_test(torch.utils.data.Dataset):
 
 
 class bottle(torch.utils.data.Dataset):
-    def __init__(self, filename, transforms = None, path='sodabottles/'):
+    def __init__(self, filename, transforms = None, path='sodabottles/', mode="full"):
         self.root_dir = os.path.join(os.getcwd(), 'datasets', path)
         self.frames = pd.read_csv(filename)
         self.transforms = transforms
@@ -62,7 +73,7 @@ class bottle(torch.utils.data.Dataset):
         img_path = os.path.join(self.root_dir,'train',self.frames.iloc[index,1])
         label = self.frames.iloc[index,0]
         ## according to alphabetic
-        labels = ['MD.Orig', 'P.Cherry', 'P.Orig', 'P.Zero']
+        labels = mode_classes(mode)
 
         with open(img_path, 'rb') as f:
             img = Image.open(f)
