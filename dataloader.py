@@ -26,7 +26,7 @@ def data_split(dir):
     df2.to_csv('test_splt.csv', sep=',', encoding='utf-8',index=False)
  
 #This line has already been run once to generate the 2 files, which I have also included in the Repo 
-data_split('datasets/sodabottles/train.csv')
+#data_split('datasets/sodabottles/train.csv')
 
 
 class bottle_test(torch.utils.data.Dataset):
