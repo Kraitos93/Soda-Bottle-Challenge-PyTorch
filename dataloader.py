@@ -29,9 +29,32 @@ def data_split(dir):
 data_split('datasets/sodabottles/train.csv')
 
 
+class bottle_test(torch.utils.data.Dataset):
+    def __init__(self, filename, transforms = None, path='datasets/sodabottles/'):
+        self.root_dir = path
+        self.frames = pd.read_csv(os.path.join(self.root_dir, 'labels', filename))
+        self.transforms = transforms
+
+    def __getitem__(self, index):
+        img_path = os.path.join(self.root_dir,'images',self.frames.iloc[index,1])
+        label = self.frames.iloc[index,0]
+        ## according to alphabetic
+        labels = ['MD.Orig', 'P.Cherry', 'P.Orig', 'P.Zero']
+
+        with open(img_path, 'rb') as f:
+            img = Image.open(f)
+            img = img.convert('RGB')
+        if self.transforms is not None:
+            img = self.transforms(img)
+        return img, labels.index(label)
+
+    def __len__(self):
+        return len(self.frames)
+
+
 class bottle(torch.utils.data.Dataset):
-    def __init__(self, filename, transforms = None):
-        self.root_dir = 'datasets/sodabottles/'
+    def __init__(self, filename, transforms = None, path='datasets/sodabottles/'):
+        self.root_dir = path
         self.frames = pd.read_csv(filename)
         self.transforms = transforms
 
