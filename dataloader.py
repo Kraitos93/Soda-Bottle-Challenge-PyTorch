@@ -45,12 +45,13 @@ class bottle_test(torch.utils.data.Dataset):
         self.root_dir = os.path.join(os.getcwd(), 'datasets', path)
         self.frames = pd.read_csv(os.path.join(self.root_dir, 'labels', filename))
         self.transforms = transforms
+        self.mode = mode
 
     def __getitem__(self, index):
         img_path = os.path.join(self.root_dir,'images',self.frames.iloc[index,1])
         label = self.frames.iloc[index,0]
         ## according to alphabetic
-        labels = mode_classes(mode)
+        labels = mode_classes(self.mode)
 
         with open(img_path, 'rb') as f:
             img = Image.open(f)
@@ -68,12 +69,13 @@ class bottle(torch.utils.data.Dataset):
         self.root_dir = os.path.join(os.getcwd(), 'datasets', path)
         self.frames = pd.read_csv(filename)
         self.transforms = transforms
+        self.mode = mode
 
     def __getitem__(self, index):
         img_path = os.path.join(self.root_dir,'train',self.frames.iloc[index,1])
         label = self.frames.iloc[index,0]
         ## according to alphabetic
-        labels = mode_classes(mode)
+        labels = mode_classes(self.mode)
 
         with open(img_path, 'rb') as f:
             img = Image.open(f)
