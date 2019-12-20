@@ -32,6 +32,8 @@ def define_loader(dataset_path):
 
 
 if __name__ == "__main__":
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    print("Testing on ",device)
     args = sys.argv
     loader = define_loader(args[1]) 
     soda_model = CNN()
