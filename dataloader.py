@@ -30,8 +30,8 @@ data_split('datasets/sodabottles/train.csv')
 
 
 class bottle_test(torch.utils.data.Dataset):
-    def __init__(self, filename, transforms = None, path='datasets/sodabottle/'):
-        self.root_dir = os.path.join(os.getcwd(), path)
+    def __init__(self, filename, transforms = None, path='sodabottle/'):
+        self.root_dir = os.path.join(os.getcwd(), 'datasets', path)
         self.frames = pd.read_csv(os.path.join(self.root_dir, 'labels', filename))
         self.transforms = transforms
 
@@ -53,8 +53,8 @@ class bottle_test(torch.utils.data.Dataset):
 
 
 class bottle(torch.utils.data.Dataset):
-    def __init__(self, filename, transforms = None, path='datasets/sodabottles/'):
-        self.root_dir = os.path.join(os.getcwd(), path)
+    def __init__(self, filename, transforms = None, path='sodabottles/'):
+        self.root_dir = os.path.join(os.getcwd(), 'datasets', path)
         self.frames = pd.read_csv(filename)
         self.transforms = transforms
 
